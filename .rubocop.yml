@@ -1,0 +1,23 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'config/initializers/*'
+    - 'config/environments/*'
+    - 'config/application.rb'
+    - 'config/puma.rb'
+    - 'node_modules/**/*'
+    - 'bin/*'
+    - 'spec/*'
+Rails:
+  Enabled: true
+Bundler/OrderedGems:
+  Enabled: false
+Metrics/LineLength:
+  Max: 120
+Style/Documentation:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false

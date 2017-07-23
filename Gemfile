@@ -5,21 +5,17 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
-# Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
-# Use Puma as the app server
 gem 'puma', '~> 3.7'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'dry-struct'
+gem 'dry-validation'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -29,7 +25,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
-  gem 'simplecov', require: false, group: :test
+  gem 'simplecov', require: false
 end
 
 group :development do
