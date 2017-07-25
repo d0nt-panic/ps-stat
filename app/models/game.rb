@@ -19,6 +19,10 @@
 #
 #  index_games_on_user_id  (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 
 class Game < ApplicationRecord
   belongs_to :user

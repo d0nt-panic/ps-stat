@@ -12,6 +12,6 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'associations' do
-    it { should have_many(:games) }
+    it { should have_many(:games).dependent(:destroy) }
   end
 end

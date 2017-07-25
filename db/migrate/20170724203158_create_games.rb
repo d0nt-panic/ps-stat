@@ -10,7 +10,7 @@ class CreateGames < ActiveRecord::Migration[5.1]
       t.integer :reward, default: 0
       t.datetime :started_at
 
-      t.belongs_to :user, index: true
+      t.belongs_to :user, index: true, foreign_key: true
 
       t.timestamps
     end
