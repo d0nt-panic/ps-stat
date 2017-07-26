@@ -17,6 +17,8 @@ Bundler/OrderedGems:
   Enabled: false
 Metrics/LineLength:
   Max: 120
+Style/MethodLength:
+  Max: 15
 Style/Documentation:
   Enabled: false
 Style/AsciiComments:
