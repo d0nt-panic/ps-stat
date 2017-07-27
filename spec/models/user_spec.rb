@@ -2,10 +2,11 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  nickname   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  nickname        :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  tourn_summaries :json
 #
 
 require 'rails_helper'
