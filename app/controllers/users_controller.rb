@@ -3,12 +3,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    result = User.create_form_schema.call(user_params)
 
-    if @user.save
+    if result.success?
+      @user = User.create(user_params)
       redirect_to user_path(@user)
     else
-      head :bad_request
+      redirect_back fallback_location: new_user_path, notice: result.errors
     end
   end
 
