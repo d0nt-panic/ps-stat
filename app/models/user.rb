@@ -2,20 +2,20 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  nickname        :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  tourn_summaries :json
+#  id         :integer          not null, primary key
+#  nickname   :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class User < ApplicationRecord
-  mount_uploaders :tourn_summaries, TournSummaryUploader
   has_many :games, dependent: :destroy
+  has_many :tourn_summaries, dependent: :destroy
 
-  def self.create_form_schema
-    Dry::Validation.Schema do
-      required(:nickname).filled
-    end
-  end
+  # def self.create_form_schema
+  #   Dry::Validation.Schema do
+  #     required(:nickname).filled
+  #     required(:tourn_summaries).filled
+  #   end
+  # end
 end
