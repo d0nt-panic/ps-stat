@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  text_files :json
+#  text_file  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -18,7 +18,7 @@
 #
 
 class TournSummary < ApplicationRecord
-  mount_uploaders :text_files, TournSummaryUploader
+  mount_uploader :text_file, TournSummaryUploader
 
   belongs_to :user
 end

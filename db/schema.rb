@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170730110415) do
 
   create_table "tourn_summaries", force: :cascade do |t|
     t.bigint "user_id"
-    t.json "text_files"
+    t.string "text_file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tourn_summaries_on_user_id"

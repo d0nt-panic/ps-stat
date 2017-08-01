@@ -15,7 +15,9 @@ module User
 
       if result.success?
         @user = User.find_or_create_by(nickname: nickname)
-        @user.tourn_summaries.create(text_files: tourn_summaries)
+        tourn_summaries.each do |ts|
+          @user.tourn_summaries.create(text_file: ts)
+        end
         true
       else
         self.errors = result.errors
