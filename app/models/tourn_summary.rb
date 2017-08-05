@@ -7,6 +7,7 @@
 #  text_file  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  error      :string
 #
 # Indexes
 #
@@ -21,4 +22,6 @@ class TournSummary < ApplicationRecord
   mount_uploader :text_file, TournSummaryUploader
 
   belongs_to :user
+
+  scope :without_errors, -> { where(error: nil) }
 end
