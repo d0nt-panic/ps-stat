@@ -26,20 +26,18 @@ class TournSummary < ApplicationRecord
 
   belongs_to :user
 
-  scope :without_errors, -> { where(error: nil) }
-
   aasm do
     state :new, initial: true
     state :processing
-    state :error
+    state :failed
     state :processed
 
     event :process do
-      transitions from: [:new, :error], to: :processing
+      transitions from: [:new, :failed], to: :processing
     end
 
-    event :failure do
-      transitions from: :processing, to: :error
+    event :fail do
+      transitions from: :processing, to: :failed
     end
 
     event :success do

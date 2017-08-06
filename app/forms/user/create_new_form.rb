@@ -18,7 +18,7 @@ class User
         self.id = user.id
         if tourn_summaries
           tourn_summaries.each do |ts|
-            ts_object = user.tourn_summaries.create(text_file: ts)
+            ts_object = user.tourn_summaries.create!(text_file: ts)
             ParseTournSummaryWorker.perform_async(ts_id: ts_object.id)
           end
         end
