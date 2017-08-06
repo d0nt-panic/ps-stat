@@ -2,12 +2,13 @@
 #
 # Table name: tourn_summaries
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  text_file  :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  error      :string
+#  id            :integer          not null, primary key
+#  user_id       :integer
+#  text_file     :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  error_message :string
+#  aasm_state    :string           not null
 #
 # Indexes
 #
