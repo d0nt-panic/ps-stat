@@ -12,10 +12,11 @@ module Tournament
 
     def call
       File.open(file_path).each.with_index do |line, line_number|
+        next if line == "\n"
         begin
           parse_line(line_number, line)
-        # rescue WrongUser
-        #   next
+        rescue WrongUser
+          next
         end
       end
       result.symbolize_keys!
@@ -29,21 +30,21 @@ module Tournament
 
     def parse_line(line_number, line)
       parser = line_parser_for(line_number)
-      match_result parser.new(line).parse
+      match_result = parser.new(line, nickname).parse
       result.merge!(match_result)
     end
 
     def line_parser_for(line_number)
-      line_parsers[line_number] #|| Tournament::FindUserPlaceAndReward
+      line_parsers[line_number] || Tournament::LineParsers::FindPlaceAndReward
     end
 
     def line_parsers
       {
-        0 => Tournament::TourneyNumber,
-        1 => Tournament::BuyinAndRake,
-        2 => Tournament::Players,
-        3 => Tournament::PrizePool,
-        4 => Tournament::StartedAt
+        0 => Tournament::LineParsers::TourneyNumber,
+        1 => Tournament::LineParsers::BuyinAndRake,
+        2 => Tournament::LineParsers::Players,
+        3 => Tournament::LineParsers::PrizePool,
+        4 => Tournament::LineParsers::StartedAt
       }
     end
   end
