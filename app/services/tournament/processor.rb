@@ -1,20 +1,21 @@
 module Tournament
   class Processor
     # TODO: think about data format (attribute or not)
-    attr_accessor :id, :data_hash
+    # attr_accessor :id, :data_hash
 
-    def initialize(ts_id)
-      id = ts_id
+    def initialize(ts, nickname)
+      @tourn_summary = ts
+      @nickname = nickname
     end
 
     def call
-      tourn_summary.process
-      data_hash = Tournament::Parser(ts) # TODO: write class
-      Tournament::Validator(data_hash) # TODO: write class
+      @tourn_summary.process
+      data_hash = Tournament::Parser(@tourn_summary.text_file.current_path, @nickname)
+      validation_result = Tournament::Validator(data_hash) # TODO: write class
       create_game
-      tourn_summary.success
-    rescue ParsingError, ValidationError => e # or may be validations
-      tourn_summary.failure
+      validation_result.success? ? @tourn_summary.success : @tourn_summary.failure
+    rescue ParsingError => e # or may be validations
+      @tourn_summary.failure
       save_error(e.message)
     end
 

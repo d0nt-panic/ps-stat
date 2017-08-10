@@ -4,7 +4,7 @@ module Tournament
 
     PLACES_IN_PRIZES = 1
 
-    def initialize(nickname, file_path)
+    def initialize(file_path, nickname)
       @nickname = nickname
       @file_path = file_path
       @result = {}
