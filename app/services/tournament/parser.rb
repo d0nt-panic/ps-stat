@@ -30,7 +30,7 @@ module Tournament
 
     def parse_line(line_number, line)
       parser = line_parser_for(line_number)
-      match_result = parser.new(line, nickname).parse
+      match_result = parser.new(line, nickname: nickname).parse
       result.merge!(match_result)
     end
 

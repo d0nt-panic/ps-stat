@@ -1,6 +1,11 @@
 module Tournament
   module LineParsers
     class FindPlaceAndReward < LineParser
+      def initialize(line, opts)
+        super
+        @nickname = opts[:nickname]
+      end
+
       def parse
         super
         raise WrongUser unless @parse_result['nickname'] == @nickname

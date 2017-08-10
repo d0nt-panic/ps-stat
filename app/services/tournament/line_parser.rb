@@ -1,9 +1,7 @@
 module Tournament
   class LineParser
-    def initialize(line, nickname)
+    def initialize(line, _opts)
       @line = line
-      @nickname = nickname
-      @parse_result = nil
     end
 
     def parse
