@@ -8,15 +8,3 @@ RSpec.describe Tournament::LineParsers::TourneyNumber do
     expect(subject).to match(tourney_number: '100500')
   end
 end
-
-# module Tournament
-#   module LineParsers
-#     class TourneyNumber < LineParser
-#       private
-
-#       def pattern
-#         /№(?<tourney_number>\d+)/
-#       end
-#     end
-#   end
-# end

@@ -15,7 +15,7 @@ module Tournament
         next if line == "\n"
         begin
           parse_line(line_number, line)
-        rescue WrongUser
+        rescue Parser::WrongUser
           next
         end
       end
@@ -29,23 +29,9 @@ module Tournament
     private
 
     def parse_line(line_number, line)
-      parser = line_parser_for(line_number)
+      parser = Tournament::LineParserRepository.line_parser_for(line_number)
       match_result = parser.new(line, nickname: nickname).parse
       result.merge!(match_result)
-    end
-
-    def line_parser_for(line_number)
-      line_parsers[line_number] || Tournament::LineParsers::FindPlaceAndReward
-    end
-
-    def line_parsers
-      {
-        0 => Tournament::LineParsers::TourneyNumber,
-        1 => Tournament::LineParsers::BuyinAndRake,
-        2 => Tournament::LineParsers::Players,
-        3 => Tournament::LineParsers::PrizePool,
-        4 => Tournament::LineParsers::StartedAt
-      }
     end
   end
 end

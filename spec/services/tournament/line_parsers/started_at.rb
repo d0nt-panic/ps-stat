@@ -8,15 +8,3 @@ RSpec.describe Tournament::LineParsers::StartedAt do
     expect(subject).to match(started_at: '01.01.2017 16:50:55 ВВ')
   end
 end
-
-# module Tournament
-#   module LineParsers
-#     class StartedAt < LineParser
-#       private
-
-#       def pattern
-#         /\[(?<started_at>.*)\]/
-#       end
-#     end
-#   end
-# end

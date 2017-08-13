@@ -1,1 +1,0 @@
-class WrongUser < StandardError; end

@@ -17,7 +17,7 @@ module Tournament
         @parse_result.merge!(reward_result)
       end
 
-      # private
+      private
 
       def pattern
         /(?<place>\d+): (?<nickname>\w+) .+\),/
