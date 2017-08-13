@@ -8,7 +8,7 @@ module Tournament
 
       def parse
         super
-        raise WrongUser unless @parse_result['nickname'] == @nickname
+        raise ::Parser::WrongUser unless @parse_result['nickname'] == @nickname
         reward_result = if @parse_result['place'].to_i <= Tournament::Parser::PLACES_IN_PRIZES
                           @line.match(reward_pattern).named_captures
                         else
