@@ -11,9 +11,9 @@ module Tournament
     def call
       @tourn_summary.process
       data_hash = Tournament::Parser(@tourn_summary.text_file.current_path, @nickname)
-      validation_result = Tournament::Validator(data_hash) # TODO: write class
-      create_game
-      validation_result.success? ? @tourn_summary.success : @tourn_summary.failure
+      validation_result = GameValidator(data_hash) # TODO: write class
+      # create_game
+      # validation_result.success? ? @tourn_summary.success : @tourn_summary.failure
     rescue ParsingError => e # or may be validations
       @tourn_summary.failure
       save_error(e.message)
