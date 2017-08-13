@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Tournament::LineParsers::LineParsers do
+RSpec.describe Tournament::LineParsers::PrizePool do
   let(:line) { "Общий призовой фонд: $2.00 USD \n" }
   subject { described_class.new(line).parse }
 

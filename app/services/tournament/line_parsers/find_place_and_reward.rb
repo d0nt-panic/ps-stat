@@ -8,12 +8,13 @@ module Tournament
 
       def parse
         super
-        raise ::Parser::WrongUser unless @parse_result['nickname'] == @nickname
-        reward_result = if @parse_result['place'].to_i <= Tournament::Parser::PLACES_IN_PRIZES
-                          @line.match(reward_pattern).named_captures
+        wrong_user_error
+        reward_result = if @parse_result[:place].to_i <= Tournament::Parser::PLACES_IN_PRIZES
+                          @line.match(reward_pattern).try(:named_captures) || {}
                         else
                           { reward: '0,00' }
                         end
+        reward_result.symbolize_keys!
         @parse_result.merge!(reward_result)
       end
 
@@ -25,6 +26,10 @@ module Tournament
 
       def reward_pattern
         /\$(?<reward>\d+\,\d+)/
+      end
+
+      def wrong_user_error
+        raise ::Parser::WrongUser unless @parse_result[:nickname] == @nickname
       end
     end
   end
