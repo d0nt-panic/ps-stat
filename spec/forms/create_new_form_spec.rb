@@ -14,15 +14,6 @@ RSpec.describe User::CreateNewForm do
         expect(User.count).to eq 1
       end
 
-      # Test or not?
-
-      # it '#id returns user id' do
-      #   user_form = valid_form
-      #   user_form.save!
-      #   u = User.find_by(nickname: 'Foo')
-      #   expect(user_form.id).to eq u.id
-      # end
-
       # it '#errors be nil' do
       # end
     end
@@ -33,11 +24,6 @@ RSpec.describe User::CreateNewForm do
       it 'return false' do
         expect(invalid_form.save!).to be false
       end
-
-      # Test or not?
-
-      # it '#id be nil' do
-      # end
 
       # it '#errors not nil' do
       #   user_form = create_form
