@@ -25,6 +25,7 @@ class TournSummary < ApplicationRecord
   mount_uploader :text_file, TournSummaryUploader
 
   belongs_to :user
+  has_one :game
 
   aasm do
     state :new, initial: true
