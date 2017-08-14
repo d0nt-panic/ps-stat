@@ -1,8 +1,4 @@
 class Game
-  module Types
-    include Dry::Types.module
-  end
-
   class GameValidator < Dry::Struct
     attribute :data, Types::Strict::Hash
     attribute :nickname, Types::Strict::String

@@ -1,8 +1,4 @@
 class User
-  module Types
-    include Dry::Types.module
-  end
-
   class CreateNewForm < Dry::Struct
     constructor_type :schema
 
