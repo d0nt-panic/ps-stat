@@ -13,7 +13,7 @@ RSpec.describe Tournament::Parser do
         buy_in: '0.92', # 92
         rake: '0.08', # 8
         prize_pool: '2.00', # 200
-        nickname: 'Fedor',
+        # nickname: 'Fedor',
         place: '1', # 1
         reward: '2,00', # 200
         started_at: '01.01.2017 16:50:55 ВВ' # DateTime.parse('01.01.2017 16:50:55 ВВ')

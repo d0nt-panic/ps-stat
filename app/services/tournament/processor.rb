@@ -1,40 +1,28 @@
 module Tournament
   class Processor
-    # TODO: think about data format (attribute or not)
-    # attr_accessor :id, :data_hash
-
-    def initialize(ts, nickname)
+    def initialize(ts, user)
       @tourn_summary = ts
-      @nickname = nickname
+      @user = user
     end
 
     def call
-      @tourn_summary.process
-      data_hash = Tournament::Parser(@tourn_summary.text_file.current_path, @nickname)
-      validation_result = GameValidator(data_hash) # TODO: write class
-      # create_game
-      # validation_result.success? ? @tourn_summary.success : @tourn_summary.failure
-    rescue ParsingError => e # or may be validations
-      @tourn_summary.failure
-      save_error(e.message)
+      @tourn_summary.process!
+
+      data_hash = Tournament::Parser(@tourn_summary.text_file.current_path, @user.nickname)
+      data_hash[:tourn_summary_id] = @tourn_summary.id
+      data_hash[:user_id] = @user.id
+      game = GameValidator.new(data: data_hash)
+
+      game ? @tourn_summary.success! : @tourn_summary.fail!
+    # rescue ParsingError => e # or may be validations
+    #   @tourn_summary.failure
+    #   save_error(e.message)
     end
 
-    private
+    # private
 
-    def create_game
-      Game.create!(data_hash)
-    end
-
-    def save_error(error_message)
-      tourn_summary.update!(error_message: error_message)
-    end
-
-    def destroy_tourn_summary
-      tourn_summary.destroy
-    end
-
-    def tourn_summary
-      @tourn_summary ||= TournSummary.find(id)
-    end
+    # def save_error(error_message)
+    #   @tourn_summary.update!(error_message: error_message)
+    # end
   end
 end

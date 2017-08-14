@@ -15,6 +15,7 @@ module Tournament
                           { reward: '0,00' }
                         end
         reward_result.symbolize_keys!
+        @parse_result.delete(:nickname)
         @parse_result.merge!(reward_result)
       end
 
