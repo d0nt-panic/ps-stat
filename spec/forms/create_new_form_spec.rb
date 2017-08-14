@@ -6,7 +6,7 @@ RSpec.describe User::CreateNewForm do
       let(:valid_form) { User::CreateNewForm.new(nickname: 'Foo') }
 
       it 'return true' do
-        expect(valid_form.save!).to be true
+        expect(valid_form.save!).to be_an_instance_of(User)
       end
 
       it 'create user' do
@@ -22,7 +22,7 @@ RSpec.describe User::CreateNewForm do
       let(:invalid_form) { User::CreateNewForm.new(nickname: '') }
 
       it 'return false' do
-        expect(invalid_form.save!).to be false
+        expect(invalid_form.save!).to be nil
       end
 
       # it '#errors not nil' do
