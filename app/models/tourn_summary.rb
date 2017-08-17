@@ -28,13 +28,13 @@ class TournSummary < ApplicationRecord
   has_one :game
 
   aasm do
-    state :new, initial: true
+    state :created, initial: true
     state :processing
     state :failed
     state :processed
 
     event :process do
-      transitions from: [:new, :failed], to: :processing
+      transitions from: [:created, :failed], to: :processing
     end
 
     event :fail do
