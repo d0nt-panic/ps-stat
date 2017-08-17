@@ -20,10 +20,6 @@ module Tournament
         end
       end
       result.symbolize_keys!
-      # TODO: write parsing
-      # there will be parsing function code
-      # result will save to data hash
-      # may occur ParsingError
     end
 
     private

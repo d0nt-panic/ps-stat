@@ -9,6 +9,8 @@ module Tournament
       @parse_result.symbolize_keys!
     end
 
+    private
+
     def pattern
       raise NotImplementedError, 'Implement in child class'
     end

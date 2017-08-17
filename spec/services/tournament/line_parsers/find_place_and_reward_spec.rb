@@ -8,14 +8,14 @@ RSpec.describe Tournament::LineParsers::FindPlaceAndReward do
     context 'in prize' do
       let(:line) { "  1: Fedor (Russia), $2,00 (100%)\n" }
       it 'return result hash' do
-        expect(subject).to match(place: '1', nickname: 'Fedor', reward: '2,00')
+        expect(subject).to match(place: '1', reward: '2,00')
       end
     end
 
     context 'not in prize' do
       let(:line) { "  1: Fedor (Russia), \n" }
       it 'return result hash' do
-        expect(subject).to match(place: '1', nickname: 'Fedor')
+        expect(subject).to match(place: '1')
       end
     end
   end

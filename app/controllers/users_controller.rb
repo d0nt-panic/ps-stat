@@ -4,12 +4,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user_create_form = User::CreateNewForm.new(user_params.to_h)
+    create_form = User::CreateNewForm.new(user_params.to_h)
 
-    if @user_create_form.save!
-      redirect_to user_path(@user_create_form.id)
+    if create_form.save!
+      redirect_to user_path(create_form.user)
     else
-      redirect_back fallback_location: new_user_path, notice: @user_create_form.errors
+      redirect_back fallback_location: new_user_path, notice: create_form.errors
     end
   end
 
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  # private
+  private
 
   def user_params
     params.require(:user).permit!
