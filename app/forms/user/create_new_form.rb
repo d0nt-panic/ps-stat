@@ -29,12 +29,12 @@ class User
     def create_tourn_summaries
       tourn_summaries.each do |ts|
         ts_object = @user.tourn_summaries.create!(text_file: ts)
-        run_tourn_parser_worker(ts_object.id, @user.id)
+        run_tourn_parser_worker(ts_object.id)
       end
     end
 
-    def run_tourn_parser_worker(tourn_summary_id, user_id)
-      ParseTournSummaryWorker.perform_async(ts_id: tourn_summary_id, user_id: user_id)
+    def run_tourn_parser_worker(tourn_summary_id)
+      ParseTournSummaryWorker.perform_async(tourn_summary_id: tourn_summary_id)
     end
   end
 end

@@ -1,9 +1,7 @@
 class ParseTournSummaryWorker
   include Sidekiq::Worker
 
-  def perform(ts_id, user_id)
-    ts = TournSummary.find(ts_id)
-    user = User.find(user_id)
-    Tournament::Processor.new(ts, user).call
+  def perform(tourn_summary_id)
+    Tournament::Processor.build(tourn_summary_id).call
   end
 end
