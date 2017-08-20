@@ -1,28 +1,43 @@
 module Tournament
   class Processor
-    def initialize(ts, user)
+    def self.build(tourn_summary_id)
+      new(TournSummary.find(tourn_summary_id))
+    end
+
+    def initialize(ts)
       @tourn_summary = ts
-      @user = user
+      raise ArgumentError unless @tourn_summary.is_a?(TournSummary)
+
+      @user = @tourn_summary.user
     end
 
     def call
       @tourn_summary.process!
+      if @tourn_summary.text_file.current_path.nil?
+        @tourn_summary.fail!
+        return false
+      end
 
-      data_hash = Tournament::Parser(@tourn_summary.text_file.current_path, @user.nickname)
-      data_hash[:tourn_summary_id] = @tourn_summary.id
-      data_hash[:user_id] = @user.id
+      data_hash = create_data_hash
       game = GameValidator.new(data: data_hash)
 
-      game ? @tourn_summary.success! : @tourn_summary.fail!
-    # rescue ParsingError => e # or may be validations
-    #   @tourn_summary.failure
-    #   save_error(e.message)
+      if game
+        @tourn_summary.success!
+        true
+      else
+        @tourn_summary.fail!
+        @tourn_summary.error_message << game.errors.join(', ')
+        false
+      end
     end
 
-    # private
+    private
 
-    # def save_error(error_message)
-    #   @tourn_summary.update!(error_message: error_message)
-    # end
+    def create_data_hash
+      data_hash = Tournament::Parser.new(@tourn_summary.text_file.current_path, @user.nickname).call
+      data_hash[:tourn_summary_id] = @tourn_summary.id
+      data_hash[:user_id] = @user.id
+      data_hash
+    end
   end
 end
