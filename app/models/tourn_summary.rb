@@ -45,4 +45,8 @@ class TournSummary < ApplicationRecord
       transitions from: :processing, to: :processed
     end
   end
+
+  def file_path
+    text_file.current_path
+  end
 end

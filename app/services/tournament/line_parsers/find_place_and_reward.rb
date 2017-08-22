@@ -30,7 +30,7 @@ module Tournament
       end
 
       def wrong_user_error
-        raise ::Parser::WrongUser unless @parse_result[:nickname] == @nickname
+        raise Tournament::Parser::WrongUserException unless @parse_result[:nickname] == @nickname
       end
     end
   end

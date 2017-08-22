@@ -15,7 +15,7 @@ module Tournament
         next if line == "\n"
         begin
           parse_line(line_number, line)
-        rescue ::Parser::WrongUser
+        rescue Tournament::Parser::WrongUserException
           next
         end
       end

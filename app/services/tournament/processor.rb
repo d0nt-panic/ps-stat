@@ -1,9 +1,5 @@
 module Tournament
   class Processor
-    def self.build(tourn_summary_id)
-      new(TournSummary.find(tourn_summary_id))
-    end
-
     def initialize(ts)
       @tourn_summary = ts
       raise ArgumentError unless @tourn_summary.is_a?(TournSummary)
@@ -13,12 +9,12 @@ module Tournament
 
     def call
       @tourn_summary.process!
-      if @tourn_summary.text_file.current_path.nil?
+      unless file_exist?
         @tourn_summary.fail!
         return false
       end
 
-      data_hash = create_data_hash
+      data_hash = parse_tournament_file
       game = GameValidator.new(data: data_hash)
 
       if game
@@ -33,11 +29,15 @@ module Tournament
 
     private
 
-    def create_data_hash
-      data_hash = Tournament::Parser.new(@tourn_summary.text_file.current_path, @user.nickname).call
-      data_hash[:tourn_summary_id] = @tourn_summary.id
-      data_hash[:user_id] = @user.id
-      data_hash
+    def file_exist?
+      @tourn_summary.text_file.current_path.present?
+    end
+
+    def parse_tournament_file
+      file_path = @tourn_summary.file_path
+      nickname = @user.nickname
+      data_hash = Tournament::Parser.new(file_path, nickname).call
+      data_hash.merge(tourn_summary_id: @tourn_summary.id, user_id: @user.id)
     end
   end
 end

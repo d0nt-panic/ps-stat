@@ -23,7 +23,7 @@ RSpec.describe Tournament::LineParsers::FindPlaceAndReward do
   describe 'other person' do
     let(:line) { "2: Sam (Canada), \n" }
     it 'return Parser::WrongUser error' do
-      expect { subject }.to raise_error ::Parser::WrongUser
+      expect { subject }.to raise_error Tournament::Parser::WrongUserException
     end
   end
 end
