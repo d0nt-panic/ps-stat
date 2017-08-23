@@ -49,4 +49,9 @@ class TournSummary < ApplicationRecord
   def file_path
     text_file.current_path
   end
+
+  def fail!(errors = ['No errors present'])
+    error_message = errors.join(', ')
+    super
+  end
 end
