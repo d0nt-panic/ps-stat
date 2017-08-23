@@ -14,20 +14,21 @@ module Tournament
       File.open(file_path).each.with_index do |line, line_number|
         next if line == "\n"
         begin
-          parse_line(line_number, line)
-        rescue Tournament::Parser::WrongUserException
+          match_result = parse_line(line_number, line)
+          @result.merge!(match_result)
+        rescue Tournament::Parser::WrongUserException => e
+          logger.warn e
           next
         end
       end
-      result.symbolize_keys!
+      @result.symbolize_keys!
     end
 
     private
 
     def parse_line(line_number, line)
       parser = Tournament::LineParsers::Repository.line_parser_for(line_number)
-      match_result = parser.new(line, nickname: nickname).parse
-      result.merge!(match_result)
+      parser.new(line, nickname: nickname).formatted_result
     end
   end
 end
