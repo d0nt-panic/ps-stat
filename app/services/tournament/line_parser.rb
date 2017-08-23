@@ -25,7 +25,7 @@ module Tournament
     end
 
     def empty_result_warn_log
-      logger.warn "#{@line}: empty string or mismatch"
+      Rails.logger.warn "#{@line}: empty string or mismatch"
     end
   end
 end

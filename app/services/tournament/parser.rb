@@ -17,7 +17,7 @@ module Tournament
           match_result = parse_line(line_number, line)
           @result.merge!(match_result)
         rescue Tournament::Parser::WrongUserException => e
-          logger.warn e
+          Rails.logger.warn e
           next
         end
       end

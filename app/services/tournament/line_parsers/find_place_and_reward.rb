@@ -14,13 +14,14 @@ module Tournament
 
       def result_to_hash
         super
-        raiser_wrong_user_error! unless @parse_result[:nickname] == @nickname
+        raise_wrong_user_error! unless @parse_result[:nickname] == @nickname
         @parse_result.delete(:nickname)
         @parse_result[:reward] ||= '0,00'
       end
 
       def raise_wrong_user_error!
-        raise Tournament::Parser::WrongUserException "#{@line}: found #{@parse_result[:nickname]} expected #{@nickname}"
+        Rails.logger.error "#{@line}: found #{@parse_result[:nickname]} expected #{@nickname}"
+        raise Tournament::Parser::WrongUserException
       end
     end
   end
