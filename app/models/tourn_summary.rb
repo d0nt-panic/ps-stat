@@ -31,7 +31,7 @@ class TournSummary < ApplicationRecord
     state :created, initial: true
     state :processing
     state :failed
-    state :processed
+    state :successful
 
     event :process do
       transitions from: [:created, :failed], to: :processing
@@ -42,7 +42,7 @@ class TournSummary < ApplicationRecord
     end
 
     event :success do
-      transitions from: :processing, to: :processed
+      transitions from: :processing, to: :successful
     end
   end
 
@@ -51,7 +51,8 @@ class TournSummary < ApplicationRecord
   end
 
   def fail_with_errors!(errors = ['No errors present'])
-    error_message = errors.join(', ')
+    error_message ||= []
+    error_message += errors
     fail!
   end
 end

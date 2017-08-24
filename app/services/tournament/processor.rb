@@ -9,12 +9,18 @@ module Tournament
 
     def call
       @tourn_summary.process!
-      @tourn_summary.fail_with_errors!(['file doesn\'t exist']) unless file_exist?
-
+      unless file_exist?
+        @tourn_summary.fail_with_errors!(['file doesn\'t exist'])
+        return nil
+      end
       data_hash = parse_tournament_file
       game = GameValidator.new(data: data_hash)
 
-      game.save ? @tourn_summary.success! : @tourn_summary.fail_with_errors!(game.errors)
+      if game.save
+        @tourn_summary.success!
+      else
+        @tourn_summary.fail_with_errors!(game.errors.to_a)
+      end
     end
 
     private

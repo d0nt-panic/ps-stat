@@ -2,7 +2,8 @@ module Tournament
   class LineParser
     def initialize(line, _opts = nil)
       @line = line
-      @parse_result = {}
+      @parse_result = nil
+      @formatted_result = {}
     end
 
     def parse
@@ -11,13 +12,13 @@ module Tournament
 
     def formatted_result
       parse ? result_to_hash : empty_result_warn_log
-      @parse_result
+      @formatted_result
     end
 
     private
 
     def result_to_hash
-      @parse_result = @parse_result.named_captures.symbolize_keys!
+      @formatted_result.merge!(@parse_result.named_captures.symbolize_keys!)
     end
 
     def pattern
