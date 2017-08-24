@@ -22,6 +22,8 @@ module Tournament
         end
       end
       @result.symbolize_keys!
+      format_result
+      @result
     end
 
     private
@@ -29,6 +31,10 @@ module Tournament
     def parse_line(line_number, line)
       parser = Tournament::LineParsers::Repository.line_parser_for(line_number)
       parser.new(line, nickname: nickname).formatted_result
+    end
+
+    def format_result
+      @result = Tournament::LineParsers::Repository.formatter_for(@result)
     end
   end
 end
