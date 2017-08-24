@@ -26,9 +26,9 @@ module Tournament
           case key
           when :tourney_number, :players, :place then value.to_i
           when :buy_in, :rake, :prize_pool, :reward then to_money(value)
-          when :started_at then DateTime.parse(value).in_time_zone
+          when :started_at then (DateTime.parse(value).utc + 4.hours) # TODO: fix this later
           else
-            raise ArgumentError "#{key} - unsupported type"
+            raise ArgumentError, "#{key} - unsupported type"
           end
         end
 

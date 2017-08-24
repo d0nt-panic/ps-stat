@@ -15,7 +15,7 @@ RSpec.describe Tournament::Parser do
         prize_pool: 200,
         place: 1,
         reward: 200,
-        started_at: DateTime.parse('01.01.2017 16:50:55 ВВ').in_time_zone
+        started_at: (DateTime.parse('01.01.2017 16:50:55 ВВ').utc + 4.hours)
       )
     end
   end
