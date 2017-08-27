@@ -37,7 +37,7 @@ class User
     end
 
     def run_tourn_parser_worker(tourn_summary_id)
-      Tournament::ParseWorker.perform_async(tourn_summary_id: tourn_summary_id)
+      Tournament::ParseWorker.perform_async(tourn_summary_id)
     end
   end
 end
