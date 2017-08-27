@@ -28,4 +28,12 @@
 class Game < ApplicationRecord
   belongs_to :tourn_summary
   belongs_to :user
+
+  def total_buy_in
+    buy_in + rake
+  end
+
+  def current_profit
+    reward - total_buy_in
+  end
 end
