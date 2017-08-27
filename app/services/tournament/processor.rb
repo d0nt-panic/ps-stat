@@ -13,7 +13,7 @@ module Tournament
         @tourn_summary.fail_with_errors!(['file doesn\'t exist'])
         return nil
       end
-      data_hash = parse_tournament_file
+      data_hash = parsing_result
       game = GameValidator.new(data: data_hash)
 
       if game.save
@@ -29,7 +29,7 @@ module Tournament
       @tourn_summary.text_file.current_path.present?
     end
 
-    def parse_tournament_file
+    def parsing_result
       file_path = @tourn_summary.file_path
       nickname = @user.nickname
       data_hash = Tournament::Parser.new(file_path, nickname).call
