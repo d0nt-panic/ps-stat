@@ -12,7 +12,7 @@ RSpec.describe GameValidator do
 
   describe '#save!' do
     context 'success' do
-      subject { described_class.new(data: data).save! }
+      subject { described_class.new(data: data).save }
 
       it 'create game' do
         expect(subject).to be_an_instance_of(Game)
@@ -20,10 +20,15 @@ RSpec.describe GameValidator do
     end
 
     context 'fail' do
-      subject { described_class.new(data: { invalid: 'hash' }).save! }
+      subject { described_class.new(data: { invalid: 'hash' }) }
 
       it 'return nil' do
-        expect(subject).to be nil
+        expect(subject.save).to be nil
+      end
+
+      it 'errors' do
+        subject.save
+        expect(subject.errors).not_to eq nil
       end
     end
   end

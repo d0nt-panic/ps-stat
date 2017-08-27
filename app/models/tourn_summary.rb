@@ -31,7 +31,7 @@ class TournSummary < ApplicationRecord
     state :created, initial: true
     state :processing
     state :failed
-    state :processed
+    state :successful
 
     event :process do
       transitions from: [:created, :failed], to: :processing
@@ -42,7 +42,17 @@ class TournSummary < ApplicationRecord
     end
 
     event :success do
-      transitions from: :processing, to: :processed
+      transitions from: :processing, to: :successful
     end
+  end
+
+  def file_path
+    text_file.current_path
+  end
+
+  def fail_with_errors!(errors = ['No errors present'])
+    error_message ||= []
+    error_message += errors
+    fail!
   end
 end

@@ -6,31 +6,22 @@ module Tournament
         @nickname = opts[:nickname]
       end
 
-      def parse
-        super
-        wrong_user_error
-        reward_result = if @parse_result[:place].to_i <= Tournament::Parser::PLACES_IN_PRIZES
-                          @line.match(reward_pattern).try(:named_captures) || {}
-                        else
-                          { reward: '0,00' }
-                        end
-        reward_result.symbolize_keys!
-        @parse_result.delete(:nickname)
-        @parse_result.merge!(reward_result)
-      end
-
       private
 
       def pattern
-        /(?<place>\d+): (?<nickname>\w+) .+\),/
+        /(?<place>\d+): (?<nickname>\w+) .+\), (\$(?<reward>\d+\,\d+))*/
       end
 
-      def reward_pattern
-        /\$(?<reward>\d+\,\d+)/
+      def result_to_hash
+        raise_wrong_user_error! unless @parse_result[:nickname] == @nickname
+        super
+        @formatted_result.delete(:nickname)
+        @formatted_result[:reward] ||= '0,00'
       end
 
-      def wrong_user_error
-        raise ::Parser::WrongUser unless @parse_result[:nickname] == @nickname
+      def raise_wrong_user_error!
+        error_text = "#{@line}: found #{@parse_result[:nickname]} expected #{@nickname}"
+        raise Tournament::Parser::WrongUserException, error_text
       end
     end
   end

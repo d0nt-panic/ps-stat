@@ -1,30 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tournament::Processor do
-  let(:user_id) { User.create.id }
-
-  describe '#build' do
-    let(:tourn_summary_id) { raise 'define me' }
-
-    subject { described_class.build(tourn_summary_id) }
-
-    context 'success' do
-      let(:tourn_summary_id) { TournSummary.create(user_id: user_id).id }
-
-      it 'create new instance' do
-        is_expected.to be_an_instance_of(Tournament::Processor)
-      end
-    end
-
-    context 'failed' do
-      let(:user_id) { User.create }
-      let(:tourn_summary_id) { 10 }
-
-      it 'raise ActiveRecord::RecordNotFound' do
-        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
+  let(:user_id) { User.create(nickname: 'Fedor').id }
 
   describe '#new' do
     let(:tourn_summary) { raise 'define me' }
@@ -42,31 +19,36 @@ RSpec.describe Tournament::Processor do
 
   describe '#call' do
     let(:tourn_summary) { raise 'define me' }
+    let(:parse_file) { described_class.new(tourn_summary).call }
 
-    subject { described_class.new(tourn_summary) }
+    subject { tourn_summary.aasm_state }
 
-    context 'success (tourn_summary with correct data)' do
-      it 'return true' do
-        expect(subject.call).to eq true
-      end
+    context 'tourn_summary with correct data' do
+      let(:correct_file) { Rails.root.join('spec', 'fixtures', 'valid_tourney.txt').open }
+      let(:tourn_summary) { TournSummary.create(user_id: user_id, text_file: correct_file) }
 
-      it 'change tourn_summary state to success' do
-        pending
-        # test that tourn_summary.aasm_state == :success
+      it 'success' do
+        parse_file
+        is_expected.to eq 'successful'
       end
     end
 
-    context 'failed (tourn_summary without correct data)' do
+    context 'tourn_summary with incorrect data' do
+      let(:incorrect_file) { Rails.root.join('spec', 'fixtures', 'invalid_tourney.txt').open }
+      let(:tourn_summary) { TournSummary.create(user_id: user_id, text_file: incorrect_file) }
+
+      it 'failed' do
+        parse_file
+        is_expected.to eq 'failed'
+      end
+    end
+
+    context 'tourn_summary without data' do
       let(:tourn_summary) { TournSummary.create(user_id: user_id) }
 
-      it 'return false' do
-        expect(subject.call).to eq false
-      end
-
-      it 'change state to fail' do
-        pending
-        # subject.call
-        # expect(subject.tourn_summary.aasm_state).to eq :failed
+      it 'failed' do
+        parse_file
+        is_expected.to eq 'failed'
       end
     end
   end

@@ -1,12 +1,12 @@
 class GameValidator < Dry::Struct
   attribute :data, Types::Strict::Hash
 
-  attr_accessor :errors
+  attr_reader :errors
 
-  def save!
+  def save
     result = ValidationSchema.call(data)
     unless result.success?
-      self.errors = result.errors
+      @errors = result.errors
       return nil
     end
 

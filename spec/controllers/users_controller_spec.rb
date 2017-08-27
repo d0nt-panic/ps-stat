@@ -22,4 +22,17 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe '#show' do
+    let(:user) { User.create(nickname: 'Fedor') }
+
+    subject do
+      get :show, params: { id: user.id }
+    end
+
+    it 'responce with 200' do
+      subject
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
