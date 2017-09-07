@@ -26,6 +26,7 @@
     "prop-types": "^15.5.10",
     "rails-erb-loader": "^5.0.2",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
